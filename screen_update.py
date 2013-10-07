@@ -5,11 +5,23 @@ __author__ = ('Kaan Akşit')
 
 import sys,os
 
-def UpdateScreen(device='/dev/fb0',ImagePath='/home/pi/omllogo.jpg'):
-    command = 'fbi -d %s %s --autozoom --noverbose' % (device,ImagePath)
+# Function to update screens.
+def UpdateScreen(tty=6,device='/dev/fb0',ImagePath='/home/pi/omllogo.jpg'):
+    command = 'fbi -T %s %s %s --autozoom --noverbose' % (tty,device,ImagePath)
     os.system(command)
     return True
 
+# Function to assign TTYs to found framebuffer devices.
+def AssignTtysToScreens(ScreenList):
+    TtyList = []
+    del TtyList[:]
+    for i in xrange(0,len(ScreenList)):
+        tty = '/dev/tty%s' % (i+6)
+        TtyList.append(tty)
+        command = './con2fb %s %s' % (ScreenList[i],TtyList[i])
+    return TtyList
+
+# Finds the framebuffer devices attached to the system.
 def FindScreens():
     ScreenList = []
     del ScreenList[:]
@@ -18,10 +30,15 @@ def FindScreens():
         ScreenList.append(line.replace("\n",""))
     return ScreenList
 
+# Main function started when the script is initiated directly.
 def main():
     print 'PI3B script, Author(s): %s' % __author__
-    print 'Framebuffer devices found:'
-    print FindScreens()
+    print '\nFramebuffer devices found:'
+    screens = FindScreens()
+    print screens
+    print '\nAssigned TTY values for found Framebuffer devices:'
+    print AssignTtysToScreens(screens)
+    print '\nSample Update of screens make sure all of them is displaying logo!'
     UpdateScreen()
     return True
 
