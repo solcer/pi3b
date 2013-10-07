@@ -3,11 +3,27 @@
 
 __author__ = ('Kaan Akşit')
 
-import sys
+import sys,os
 
-def anadongu():
-    print 'PI3B betiği,Yazar(lar): %s' % __author__
+def UpdateScreen(device='/dev/fb0',ImagePath='/home/pi/omllogo.jpg'):
+    command = 'fbi -d %s %s --autozoom --noverbose' % (device,ImagePath)
+    os.system(command)
+    return True
+
+def FindScreens():
+    ScreenList = []
+    del ScreenList[:]
+    pipe       = os.popen('ls /dev/fb*')
+    for line in pipe.readlines():
+        ScreenList.append(line.replace("\n",""))
+    return ScreenList
+
+def main():
+    print 'PI3B script, Author(s): %s' % __author__
+    print 'Framebuffer devices found:'
+    print FindScreens()
+    UpdateScreen()
     return True
 
 if __name__ == '__main__':
-    sys.exit(anadongu())
+    sys.exit(main())
