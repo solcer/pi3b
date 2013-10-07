@@ -6,8 +6,9 @@ __author__ = ('Kaan Akşit')
 import sys,os
 
 # Function to update screens.
-def UpdateScreen(tty=6,device='/dev/fb0',ImagePath='/home/pi/omllogo.jpg'):
-    command = 'fbi -T %s %s %s --autozoom --noverbose' % (tty,device,ImagePath)
+def UpdateScreen(tty=6,ImagePath='/home/pi/omllogo.jpg'):
+    command = 'fbi -T %s %s --autozoom --noverbose' % (tty,ImagePath)
+    print command
     os.system(command)
     return True
 
@@ -16,9 +17,11 @@ def AssignTtysToScreens(ScreenList):
     TtyList = []
     del TtyList[:]
     for i in xrange(0,len(ScreenList)):
-        tty = '/dev/tty%s' % (i+6)
+        tty = '%s' % (i+10)
         TtyList.append(tty)
         command = './con2fb %s %s' % (ScreenList[i],TtyList[i])
+        print command
+        os.system(command) 
     return TtyList
 
 # Finds the framebuffer devices attached to the system.
@@ -37,9 +40,12 @@ def main():
     screens = FindScreens()
     print screens
     print '\nAssigned TTY values for found Framebuffer devices:'
-    print AssignTtysToScreens(screens)
+    ttys    = AssignTtysToScreens(screens)
+    print ttys
     print '\nSample Update of screens make sure all of them is displaying logo!'
-    UpdateScreen()
+    for i in xrange(0,len(screens)):
+        UpdateScreen(ttys[i])
+        print 'Updating %s on %s' % (screens[i],ttys[i])
     return True
 
 if __name__ == '__main__':
