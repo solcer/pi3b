@@ -3,12 +3,11 @@
 
 __author__ = ('Kaan Akşit')
 
-import sys,os
+import sys,os,time
 
 # Function to update screens.
-def UpdateScreen(tty=6,ImagePath='/home/pi/omllogo.jpg'):
+def UpdateScreen(tty=6,ImagePath='./Content/blank.png'):
     command = 'fbi -T %s %s --autozoom --noverbose' % (tty,ImagePath)
-    print command
     os.system(command)
     return True
 
@@ -42,10 +41,28 @@ def main():
     print '\nAssigned TTY values for found Framebuffer devices:'
     ttys    = AssignTtysToScreens(screens)
     print ttys
+    tdelay  = 1
+    test(ttys,screens,"no")
+    UpdateScreen(ttys[0],'./Content/screen1.png')
+    time.sleep(tdelay)
+    UpdateScreen(ttys[1],'./Content/screen2.png')
+    time.sleep(tdelay)
+    UpdateScreen(ttys[2],'./Content/screen3.png')
+    time.sleep(tdelay)
+    UpdateScreen(ttys[3],'./Content/screen4.png')
+    time.sleep(tdelay)
+    UpdateScreen(ttys[4],'./Content/screen5.png')
+    time.sleep(tdelay)
+    return True
+
+# Display test pattern at each framebuffer device.
+def test(ttys,screens,wait="no"):
     print '\nSample Update of screens make sure all of them is displaying logo!'
     for i in xrange(0,len(screens)):
         UpdateScreen(ttys[i])
         print 'Updating %s on %s' % (screens[i],ttys[i])
+        if wait == "yes":
+            time.sleep(1)
     return True
 
 if __name__ == '__main__':
