@@ -35,24 +35,23 @@ def FindScreens():
 # Main function started when the script is initiated directly.
 def main():
     print 'PI3B script, Author(s): %s' % __author__
+    # Finding the screens connected to the device.
     print '\nFramebuffer devices found:'
     screens = FindScreens()
     print screens
+    # Assigning TTY to each framebuffer device.
     print '\nAssigned TTY values for found Framebuffer devices:'
     ttys    = AssignTtysToScreens(screens)
     print ttys
-    tdelay  = 5
+    # Test pattern is displayed on the each display.
     test(ttys,screens,"no")
-    UpdateScreen(ttys[0],'./Content/screen1.png')
-    time.sleep(tdelay)
-    UpdateScreen(ttys[1],'./Content/screen2.png')
-    time.sleep(tdelay)
-    UpdateScreen(ttys[2],'./Content/screen3.png')
-    time.sleep(tdelay)
-    UpdateScreen(ttys[3],'./Content/screen4.png')
-    time.sleep(tdelay)
-    UpdateScreen(ttys[4],'./Content/screen5.png')
-    time.sleep(tdelay)
+    # Each screen is being update with the necessary content.
+    # Change the tdelay (secs) to adjust the time in between each screen update.
+    tdelay  = 1     
+    for i in xrange(0,len(ttys)):
+        UpdateScreen(ttys[i],'./Content/screen%d.png' % (i+1))
+        print 'Updating %s on %s' % (screens[i],ttys[i])
+        time.sleep(tdelay)   
     return True
 
 # Display test pattern at each framebuffer device.
