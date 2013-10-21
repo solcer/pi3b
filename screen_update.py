@@ -41,7 +41,7 @@ def main():
     print '\nAssigned TTY values for found Framebuffer devices:'
     ttys    = AssignTtysToScreens(screens)
     print ttys
-    tdelay  = 1
+    tdelay  = 5
     test(ttys,screens,"no")
     UpdateScreen(ttys[0],'./Content/screen1.png')
     time.sleep(tdelay)
