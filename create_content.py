@@ -11,7 +11,7 @@ def main():
     width         = 848
     height        = 480
     # Number of views.
-    NumberOfViews = 3
+    NumberOfViews = 5
     # Colors are defined.
     colors     = [
                  (255,0,0),
@@ -48,11 +48,17 @@ def main():
     for j in xrange(0,NumberOfViews):
         # Start offset calculated.
         if j % 2 == 1:
-           OffsetTop = 16 * slitsize[1] + j * slitsize[1]/2
+           if j == 1:
+               OffsetTop = 68 * slitsize[1]/4 
+           if j == 3:
+               OffsetTop = 66 * slitsize[1]/4            
         else:
-           OffsetTop = - j * slitsize[1]/2
-           if j > 0:
-               OffsetTop -= 1 * slitsize[1]
+           if j == 0:
+               OffsetTop = 0
+           if j == 2:
+               OffsetTop = - 3 * slitsize[1]/4
+           if j == 4:
+               OffsetTop = - 5 * slitsize[1]/4
         # Creating the new surface.
         NewSurface = pygame.Surface((width, height))
         # Loop to create each slit
