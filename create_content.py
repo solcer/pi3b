@@ -11,7 +11,7 @@ def main():
     width         = 848
     height        = 480
     # Number of views.
-    NumberOfViews = 2
+    NumberOfViews = 3
     # Colors are defined.
     colors     = [
                  (255,0,0),
@@ -45,19 +45,27 @@ def main():
     # Number of slits calculated.
     NumberOfSlits = height / slitsize[1]
     # Loop to create each view.
-    for j in xrange(0,NumberOfViews+1):
+    for j in xrange(0,NumberOfViews):
         # Start offset calculated.
-        OffsetTop = j * slitsize[1]/2
+        if j % 2 == 1:
+           OffsetTop = 16 * slitsize[1] + j * slitsize[1]/2
+        else:
+           OffsetTop = - j * slitsize[1]/2
+           if j > 0:
+               OffsetTop -= 1 * slitsize[1]
         # Creating the new surface.
         NewSurface = pygame.Surface((width, height))
         # Loop to create each slit
         for i in xrange(0,NumberOfSlits):
             slit       = pygame.Rect((0,(i*slitsize[1] + OffsetTop) % height), slitsize)
             pygame.draw.rect(NewSurface, colors[i], slit, 0)
+        # Fill the blank space with correct color.
         if NewSurface.get_at((0,0)) == (0,0,0,255):
             slit       = pygame.Rect((0,0), (slitsize[0],slitsize[1]/2))
-            pygame.draw.rect(NewSurface, colors[i], slit, 0)
+            pygame.draw.rect(NewSurface, NewSurface.get_at((width-1,height-1)), slit, 0)
         # Saving the surface as an image file.
+        if j % 2 == 1:
+            NewSurface = pygame.transform.rotate(NewSurface, 180)
         pygame.image.save(NewSurface, './Content/samplescreen%d.png' % j)
     return True
 

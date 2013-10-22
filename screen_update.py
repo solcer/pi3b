@@ -50,6 +50,7 @@ def main():
     tdelay  = 1     
     for i in xrange(0,len(ttys)):
         UpdateScreen(ttys[i],'./Content/screen%d.png' % (i+1))
+        UpdateScreen(ttys[i],'./Content/samplescreen%d.png' % i)
         print 'Updating %s on %s' % (screens[i],ttys[i])
         time.sleep(tdelay)   
     return True
