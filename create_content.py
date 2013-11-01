@@ -43,8 +43,12 @@ def main(ShowImage='yes'):
     # Slit is defined geometrically.
     SlitHeight    = 20
     SlitSize      = [0, SlitHeight]
-    # Load image and slice it into pieces
-    ImageSlices   = LoadImage('./Content/kaan.png',SlitHeight)
+    # Load multiview images and slice them into pieces
+    ImageSlices   = []
+    for no in xrange(0,2):
+        ImageSlices.append(LoadImage('./Content/kaan.png',SlitHeight))
+    print len(ImageSlices),len(ImageSlices[0])
+    print ImageSlices[0][4]
     # Number of slits calculated.
     NumberOfSlits = height / SlitSize[1]
     # Image display counter.
@@ -83,7 +87,13 @@ def main(ShowImage='yes'):
             # If image display is desired, this if loop takes on.
             if ShowImage == 'yes':
                 if colors[i] == (127,255,127):
-                    NewSurface.blit(ImageSlices[ImageCounter], slit)                    
+                    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    # !!! REMEMBER TO CHANGE ZERO WITH VIEW NUMBER !!! ADD ImageCounter second dimension !!!
+                    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    # Adjusting image according to the image height.
+                    ImageSlices[0][ImageCounter] = pygame.transform.scale(ImageSlices[0][ImageCounter],(SlitSize[0], SlitSize[1]))
+                    # Necessary slice is being place accordingly.
+                    NewSurface.blit(ImageSlices[0][ImageCounter], slit)                    
                     ImageCounter += 1
         # Fill the blank space with correct color.
         if NewSurface.get_at((0,0)) == (0,0,0,255):
@@ -96,15 +106,25 @@ def main(ShowImage='yes'):
     return True
 
 # Function to load image and slice it
-def LoadImage(path,SlitHeight=20):
+def LoadImage(path,SlitHeight=20,reverse=0):
+    # Image load takes place.
     Image   = pygame.image.load(path)
+    # Transform the image into usable format
+    Image   = pygame.transform.scale(Image,(100, 480))
+    # Image properties are saved.
     ImgH    = Image.get_height()
     ImgW    = Image.get_width()
     Cropped = []
-    for i in xrange(0,ImgW/SlitHeight):    
+    # Producing the slices.
+    for i in xrange(0,ImgW/SlitHeight):   
+        # Cropping takes place. 
         Cropped.append(pygame.Surface((SlitHeight,ImgH)))
         Cropped[i].blit(Image, (0,0), (i*SlitHeight,0,SlitHeight,ImgH))
-        Cropped[i] = pygame.transform.rotate(Cropped[i], 90)
+        # Rotating the each slice with 90.
+        Cropped[i] = pygame.transform.rotate(Cropped[i], -90)
+    # Reverse ordering slices.
+    if reverse == 1:
+        Cropped = Cropped[::-1]
     return Cropped
 
 if __name__ == '__main__':
