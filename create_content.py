@@ -41,44 +41,44 @@ def main():
                  (50,0,255),
                  ]
     # Slit is defined geometrically.
-    slitheight = 20
-    slitsize   = (0, slitheight)
+    SlitHeight    = 20
+    SlitSize      = [0, SlitHeight]
     # Number of slits calculated.
-    NumberOfSlits = height / slitsize[1]
+    NumberOfSlits = height / SlitSize[1]
     # Loop to create each view.
     for j in xrange(0,NumberOfViews):
         # Setting offset
         if j % 2 == 1:
            if j == 1:
-               OffsetTop  = 68 * slitsize[1]/4
-               OffsetLeft = 0 
-               slitwidth  = width
+               OffsetLeft  = 145
+               OffsetTop   = 68 * SlitSize[1]/4
+               SlitSize[0] = 475
            if j == 3:
-               OffsetTop  = 66 * slitsize[1]/4            
-               OffsetLeft = 0 
-               slitwidth  = width
+               OffsetLeft  = 120
+               OffsetTop   = 66 * SlitSize[1]/4            
+               SlitSize[0] = 465
         else:
            if j == 0:
-               OffsetTop  = 0
-               OffsetLeft = 20 
-               slitwidth  = width
+               OffsetLeft  = 203
+               OffsetTop   = 0
+               SlitSize[0] = 490
            if j == 2:
-               OffsetTop  = - 3 * slitsize[1]/4
-               OffsetLeft = 0 
-               slitwidth  = width - 20
+               OffsetLeft  = 355
+               OffsetTop   = - 3 * SlitSize[1]/4
+               SlitSize[0] = width - OffsetLeft 
            if j == 4:
-               OffsetTop  = - 5 * slitsize[1]/4
-               OffsetLeft = 0 
-               slitwidth  = width
+               OffsetLeft  = 262
+               OffsetTop   = - 5 * SlitSize[1]/4
+               SlitSize[0] = 483
         # Creating the new surface.
         NewSurface = pygame.Surface((width, height))
         # Loop to create each slit
         for i in xrange(0,NumberOfSlits):
-            slit       = pygame.Rect((OffsetLeft,(i*slitsize[1] + OffsetTop) % height), slitsize)
+            slit       = pygame.Rect((OffsetLeft,(i*SlitSize[1] + OffsetTop) % height), SlitSize)
             pygame.draw.rect(NewSurface, colors[i], slit, 0)
         # Fill the blank space with correct color.
         if NewSurface.get_at((0,0)) == (0,0,0,255):
-            slit       = pygame.Rect((OffsetLeft,0), (slitsize[0], slitsize[1]/2))
+            slit       = pygame.Rect((OffsetLeft,0), (SlitSize[0], SlitSize[1]/2))
             pygame.draw.rect(NewSurface, NewSurface.get_at((width-1,height-1)), slit, 0)
         # Saving the surface as an image file.
         if j % 2 == 1:
