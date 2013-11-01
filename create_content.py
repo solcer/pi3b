@@ -6,7 +6,7 @@ __author__ = ('Kaan Akşit')
 import sys,os,time,pygame
 from pygame.locals import *
 
-def main():
+def main(ShowImage='yes'):
     # Width, and height of the desired image.
     width         = 848
     height        = 480
@@ -43,8 +43,12 @@ def main():
     # Slit is defined geometrically.
     SlitHeight    = 20
     SlitSize      = [0, SlitHeight]
+    # Load image and slice it into pieces
+    ImageSlices   = LoadImage('./Content/kaan.png',SlitHeight)
     # Number of slits calculated.
     NumberOfSlits = height / SlitSize[1]
+    # Image display counter.
+    ImageCounter = 0
     # Loop to create each view.
     for j in xrange(0,NumberOfViews):
         # Setting offset
@@ -72,10 +76,15 @@ def main():
                SlitSize[0] = 483
         # Creating the new surface.
         NewSurface = pygame.Surface((width, height))
-        # Loop to create each slit
+        # Loop to create each slit.
         for i in xrange(0,NumberOfSlits):
             slit       = pygame.Rect((OffsetLeft,(i*SlitSize[1] + OffsetTop) % height), SlitSize)
             pygame.draw.rect(NewSurface, colors[i], slit, 0)
+            # If image display is desired, this if loop takes on.
+            if ShowImage == 'yes':
+                if colors[i] == (127,255,127):
+                    NewSurface.blit(ImageSlices[ImageCounter], slit)                    
+                    ImageCounter += 1
         # Fill the blank space with correct color.
         if NewSurface.get_at((0,0)) == (0,0,0,255):
             slit       = pygame.Rect((OffsetLeft,0), (SlitSize[0], SlitSize[1]/2))
@@ -86,5 +95,17 @@ def main():
         pygame.image.save(NewSurface, './Content/samplescreen%d.png' % j)
     return True
 
+# Function to load image and slice it
+def LoadImage(path,SlitHeight=20):
+    Image   = pygame.image.load(path)
+    ImgH    = Image.get_height()
+    ImgW    = Image.get_width()
+    Cropped = []
+    for i in xrange(0,ImgW/SlitHeight):    
+        Cropped.append(pygame.Surface((SlitHeight,ImgH)))
+        Cropped[i].blit(Image, (0,0), (i*SlitHeight,0,SlitHeight,ImgH))
+        Cropped[i] = pygame.transform.rotate(Cropped[i], 90)
+    return Cropped
+
 if __name__ == '__main__':
-    sys.exit(main())
+    sys.exit(main('yes'))
