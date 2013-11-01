@@ -65,7 +65,7 @@ def main():
            if j == 2:
                OffsetLeft  = 355
                OffsetTop   = - 3 * SlitSize[1]/4
-               SlitSize[0] = width - OffsetLeft 
+               SlitSize[0] = 493
            if j == 4:
                OffsetLeft  = 262
                OffsetTop   = - 5 * SlitSize[1]/4
