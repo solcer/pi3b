@@ -66,11 +66,11 @@ def main(ShowImage='yes'):
                SlitSize[0] = 465
         else:
            if j == 0:
-               OffsetLeft  = 203
+               OffsetLeft  = 195
                OffsetTop   = 0
                SlitSize[0] = 490
            if j == 2:
-               OffsetLeft  = 355
+               OffsetLeft  = 270
                OffsetTop   = - 3 * SlitSize[1]/4
                SlitSize[0] = 493
            if j == 4:
