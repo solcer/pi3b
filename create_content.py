@@ -67,8 +67,13 @@ def main(ShowImage='yes',BlockNumber='a1'):
                OffsetTop   = 66 * SlitSize[1]/4            
                SlitSize[0] = 465
         else:
+<<<<<<< HEAD
            if j == 0 and BlockNumber == 'a1':
                OffsetLeft  = 195
+=======
+           if j == 0:
+               OffsetLeft  = 205
+>>>>>>> origin/master
                OffsetTop   = 0
                SlitSize[0] = 490                
            if j == 0 and BlockNumber == 'a2':
