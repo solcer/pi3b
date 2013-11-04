@@ -6,7 +6,9 @@ __author__ = ('Kaan Akşit')
 import sys,os,time,pygame
 from pygame.locals import *
 
-def main(ShowImage='yes'):
+# If ShowImage is set to yes, the content is created using sample input under Content folder.
+# BlockNumber determines the position of the five pico projector.
+def main(ShowImage='yes',BlockNumber='a1'):
     # Width, and height of the desired image.
     width         = 848
     height        = 480
@@ -56,24 +58,28 @@ def main(ShowImage='yes'):
     for j in xrange(0,NumberOfViews):
         # Setting offset
         if j % 2 == 1:
-           if j == 1:
+           if j == 1 and BlockNumber == 'a1':
                OffsetLeft  = 145
                OffsetTop   = 68 * SlitSize[1]/4
                SlitSize[0] = 475
-           if j == 3:
+           if j == 3 and BlockNumber == 'a1':
                OffsetLeft  = 120
                OffsetTop   = 66 * SlitSize[1]/4            
                SlitSize[0] = 465
         else:
-           if j == 0:
+           if j == 0 and BlockNumber == 'a1':
                OffsetLeft  = 195
                OffsetTop   = 0
-               SlitSize[0] = 490
-           if j == 2:
+               SlitSize[0] = 490                
+           if j == 0 and BlockNumber == 'a2':
+               OffsetLeft  = 250
+               OffsetTop   = 0
+               SlitSize[0] = 300                
+           if j == 2 and BlockNumber == 'a1':
                OffsetLeft  = 270
                OffsetTop   = - 3 * SlitSize[1]/4
                SlitSize[0] = 493
-           if j == 4:
+           if j == 4 and BlockNumber == 'a1':
                OffsetLeft  = 262
                OffsetTop   = - 5 * SlitSize[1]/4
                SlitSize[0] = 483
@@ -127,4 +133,4 @@ def LoadImage(path,SlitHeight=20,reverse=0,width=100,height=480):
     return Cropped
 
 if __name__ == '__main__':
-    sys.exit(main('yes'))
+    sys.exit(main('yes','a2'))
