@@ -58,7 +58,10 @@ def main(ShowImage='yes'):
     # Number of slits calculated.
     NumberOfSlits = height / SlitSize[1]
     # Image display counter.
-    ImageCounter = 0
+    if BlockNumber == 'a1':
+        ImageCounter = 0
+    elif BlockNumber == 'a2':
+        ImageCounter = 5
     # Loop to create each view.
     for j in xrange(0,NumberOfViews):
         # Setting offset
