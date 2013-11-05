@@ -62,6 +62,10 @@ def main(ShowImage='yes',BlockNumber='a1'):
                OffsetLeft  = 145
                OffsetTop   = 68 * SlitSize[1]/4
                SlitSize[0] = 475
+           if j == 1 and BlockNumber == 'a2':
+               OffsetLeft  = 100
+               OffsetTop   = 0
+               SlitSize[0] = 490
            if j == 3 and BlockNumber == 'a1':
                OffsetLeft  = 120
                OffsetTop   = 66 * SlitSize[1]/4            
@@ -72,9 +76,9 @@ def main(ShowImage='yes',BlockNumber='a1'):
                OffsetTop   = 0
                SlitSize[0] = 490                
            if j == 0 and BlockNumber == 'a2':
-               OffsetLeft  = 250
-               OffsetTop   = 0
-               SlitSize[0] = 300                
+               OffsetLeft  = 330
+               OffsetTop   = 69 * SlitSize[1]/4
+               SlitSize[0] = 460                
            if j == 2 and BlockNumber == 'a1':
                OffsetLeft  = 270
                OffsetTop   = - 3 * SlitSize[1]/4
