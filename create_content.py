@@ -76,9 +76,9 @@ def main(ShowImage='yes',BlockNumber='a1'):
                OffsetTop   = 0
                SlitSize[0] = 490                
            if j == 0 and BlockNumber == 'a2':
-               OffsetLeft  = 330
-               OffsetTop   = 69 * SlitSize[1]/4
-               SlitSize[0] = 460                
+               OffsetLeft  = 213
+               OffsetTop   = 64 * SlitSize[1]/4            
+               SlitSize[0] = 455
            if j == 2 and BlockNumber == 'a1':
                OffsetLeft  = 270
                OffsetTop   = - 3 * SlitSize[1]/4
@@ -109,7 +109,9 @@ def main(ShowImage='yes',BlockNumber='a1'):
             slit       = pygame.Rect((OffsetLeft,0), (SlitSize[0], SlitSize[1]/2))
             pygame.draw.rect(NewSurface, NewSurface.get_at((width-1,height-1)), slit, 0)
         # Saving the surface as an image file.
-        if j % 2 == 1:
+        if j % 2 == 1 and BlockNumber == 'a1':
+            NewSurface = pygame.transform.rotate(NewSurface, 180)
+        if j % 2 == 0 and BlockNumber == 'a2':
             NewSurface = pygame.transform.rotate(NewSurface, 180)
         pygame.image.save(NewSurface, './Content/samplescreen%d.png' % j)
     return True
