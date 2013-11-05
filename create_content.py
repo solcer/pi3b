@@ -3,12 +3,17 @@
 
 __author__ = ('Kaan Akşit')
 
-import sys,os,time,pygame
+import sys,os,time,pygame,socket
 from pygame.locals import *
 
 # If ShowImage is set to yes, the content is created using sample input under Content folder.
 # BlockNumber determines the position of the five pico projector.
-def main(ShowImage='yes',BlockNumber='a1'):
+def main(ShowImage='yes'):
+    # Recognize Raspberry PI.
+    if socket.gethostname() == 'PI3B01':
+        BlockNumber = 'a1'
+    elif socket.gethostname() == 'PI3B02':
+        BlockNumber = 'a2'
     # Width, and height of the desired image.
     width         = 848
     height        = 480
@@ -63,27 +68,39 @@ def main(ShowImage='yes',BlockNumber='a1'):
                OffsetTop   = 68 * SlitSize[1]/4
                SlitSize[0] = 475
            if j == 1 and BlockNumber == 'a2':
-               OffsetLeft  = 100
-               OffsetTop   = 0
-               SlitSize[0] = 490
+               OffsetLeft  = 260
+               OffsetTop   = - 3 * SlitSize[1]/4
+               SlitSize[0] = 480
            if j == 3 and BlockNumber == 'a1':
                OffsetLeft  = 120
                OffsetTop   = 66 * SlitSize[1]/4            
                SlitSize[0] = 465
+           if j == 3 and BlockNumber == 'a2':
+               OffsetLeft  = 225
+               OffsetTop   = - 11 * SlitSize[1]/4
+               SlitSize[0] = 475
         else:
            if j == 0 and BlockNumber == 'a1':
                OffsetLeft  = 205
                OffsetTop   = 0
                SlitSize[0] = 490                
            if j == 0 and BlockNumber == 'a2':
-               OffsetLeft  = 213
+               OffsetLeft  = 60
                OffsetTop   = 64 * SlitSize[1]/4            
                SlitSize[0] = 455
            if j == 2 and BlockNumber == 'a1':
                OffsetLeft  = 270
                OffsetTop   = - 3 * SlitSize[1]/4
                SlitSize[0] = 493
+           if j == 2 and BlockNumber == 'a2':
+               OffsetLeft  = 120
+               OffsetTop   = 66 * SlitSize[1]/4            
+               SlitSize[0] = 465
            if j == 4 and BlockNumber == 'a1':
+               OffsetLeft  = 262
+               OffsetTop   = - 5 * SlitSize[1]/4
+               SlitSize[0] = 483
+           if j == 4 and BlockNumber == 'a2':
                OffsetLeft  = 262
                OffsetTop   = - 5 * SlitSize[1]/4
                SlitSize[0] = 483
@@ -139,4 +156,4 @@ def LoadImage(path,SlitHeight=20,reverse=0,width=100,height=480):
     return Cropped
 
 if __name__ == '__main__':
-    sys.exit(main('yes','a2'))
+    sys.exit(main('yes'))
