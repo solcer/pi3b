@@ -53,7 +53,7 @@ def main(ShowImage='yes'):
     # Load multiview images and slice them into pieces
     ImageSlices   = []
     for no in xrange(0,2):
-        ImageSlices.append(LoadImage('./Content/kaan.png',SlitHeight, 480, 100))
+        ImageSlices.append(LoadImage('./Content/kaan.png',SlitHeight, 480, 200))
 #        ImageSlices.append(LoadImage('./Content/MultiView/12.jpg',SlitHeight, width, height))
     # Number of slits calculated.
     NumberOfSlits = height / SlitSize[1]
@@ -134,7 +134,7 @@ def main(ShowImage='yes'):
     return True
 
 # Function to load image and slice it
-def LoadImage(path,SlitHeight=20,reverse=0,width=100,height=480):
+def LoadImage(path,SlitHeight=20,reverse=0,width=200,height=480):
     # Image load takes place.
     Image   = pygame.image.load(path)
     # Transform the image into usable format
