@@ -3,8 +3,30 @@
 
 __author__ = ('Kaan Akşit')
 
-import sys,os,time,pygame,socket
+import sys,os,time,pygame,socket,csv
 from pygame.locals import *
+
+
+# CSV reader to read offset positions of the pico projectors.
+def ReadCSV(filename,BlockNumber):
+    # Open a socket to read CSV.
+    ifile   = open(filename, "rb")
+    reader  = csv.reader(ifile)
+    offsets = []
+    # Skip header
+    next(reader)
+    # Read the CSV row by row.
+    for row in reader:
+        # Avoid empty lines in CSV
+        if len(row) > 0:
+            # Strip white spaces from CSV file.
+            row = ([element.strip() for element in row])
+            # Match the block number to get the related data into the array.
+            if row[0] == BlockNumber:
+                offsets.append(row)
+    # Close the socket.
+    ifile.close()
+    return offsets
 
 # If ShowImage is set to yes, the content is created using sample input under Content folder.
 # BlockNumber determines the position of the five pico projector.
@@ -14,6 +36,8 @@ def main(ShowImage='yes'):
         BlockNumber = 'a1'
     elif socket.gethostname() == 'PI3B02':
         BlockNumber = 'a2'
+    # Reading offsets.csv to retrieve the offset values.
+    offsets = ReadCSV("offsets.csv",BlockNumber)
     # Width, and height of the desired image.
     width         = 848
     height        = 480
@@ -54,7 +78,6 @@ def main(ShowImage='yes'):
     ImageSlices   = []
     for no in xrange(0,2):
         ImageSlices.append(LoadImage('./Content/kaan.png',SlitHeight, 480, 200))
-#        ImageSlices.append(LoadImage('./Content/MultiView/12.jpg',SlitHeight, width, height))
     # Number of slits calculated.
     NumberOfSlits = height / SlitSize[1]
     # Image display counter.
@@ -65,48 +88,9 @@ def main(ShowImage='yes'):
     # Loop to create each view.
     for j in xrange(0,NumberOfViews):
         # Setting offset
-        if j % 2 == 1:
-           if j == 1 and BlockNumber == 'a1':
-               OffsetLeft  = 145
-               OffsetTop   = 68 * SlitSize[1]/4
-               SlitSize[0] = 475
-           if j == 1 and BlockNumber == 'a2':
-               OffsetLeft  = 260
-               OffsetTop   = - 3 * SlitSize[1]/4
-               SlitSize[0] = 480
-           if j == 3 and BlockNumber == 'a1':
-               OffsetLeft  = 120
-               OffsetTop   = 66 * SlitSize[1]/4            
-               SlitSize[0] = 465
-           if j == 3 and BlockNumber == 'a2':
-               OffsetLeft  = 225
-               OffsetTop   = - 11 * SlitSize[1]/4
-               SlitSize[0] = 475
-        else:
-           if j == 0 and BlockNumber == 'a1':
-               OffsetLeft  = 205
-               OffsetTop   = 0
-               SlitSize[0] = 490                
-           if j == 0 and BlockNumber == 'a2':
-               OffsetLeft  = 60
-               OffsetTop   = 64 * SlitSize[1]/4            
-               SlitSize[0] = 455
-           if j == 2 and BlockNumber == 'a1':
-               OffsetLeft  = 270
-               OffsetTop   = - 3 * SlitSize[1]/4
-               SlitSize[0] = 493
-           if j == 2 and BlockNumber == 'a2':
-               OffsetLeft  = 120
-               OffsetTop   = 66 * SlitSize[1]/4            
-               SlitSize[0] = 465
-           if j == 4 and BlockNumber == 'a1':
-               OffsetLeft  = 262
-               OffsetTop   = - 5 * SlitSize[1]/4
-               SlitSize[0] = 483
-           if j == 4 and BlockNumber == 'a2':
-               OffsetLeft  = 262
-               OffsetTop   = - 5 * SlitSize[1]/4
-               SlitSize[0] = 483
+        OffsetLeft  = int(offsets[j][2])
+        OffsetTop   = int(offsets[j][3])
+        SlitSize[0] = int(offsets[j][4])
         # Creating the new surface.
         NewSurface = pygame.Surface((width, height))
         # Loop to create each slit.
