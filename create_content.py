@@ -33,9 +33,11 @@ def ReadCSV(filename,BlockNumber):
 def main(ShowImage='yes'):
     # Recognize Raspberry PI.
     if socket.gethostname() == 'PI3B01':
-        BlockNumber = 'a1'
+        BlockNumber           = 'a1'
+        ImageCounterCoustant  = 0
     elif socket.gethostname() == 'PI3B02':
-        BlockNumber = 'a2'
+        BlockNumber           = 'a2'
+        ImageCounterConstant  = 5
     # Reading offsets.csv to retrieve the offset values.
     offsets = ReadCSV("offsets.csv",BlockNumber)
     # Width, and height of the desired image.
@@ -80,13 +82,8 @@ def main(ShowImage='yes'):
     MultiViewImages = ['./Content/right.jpg','./Content/left.jpg'] 
     for ImageName in MultiViewImages:
         ImageSlices.append(LoadImage(ImageName,SlitHeight, 480, 200))
-        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        # Think of a fix later on for this part.
         # ImageCounter used in displaying right images.
-        if BlockNumber == 'a1':
-            ImageCounter.append(0)
-        if BlockNumber == 'a2':
-            ImageCounter.append(5)
+        ImageCounter.append(ImageCounterConstant)
     # Number of slits calculated.
     NumberOfSlits = height / SlitSize[1]
     # Loop to create each view.
