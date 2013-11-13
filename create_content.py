@@ -82,6 +82,8 @@ def main(ShowImage='yes'):
         ImageSlices.append(LoadImage(ImageName,SlitHeight, 480, 200))
         # ImageCounter used in displaying right images.
         ImageCounter.append(0)
+    # Later fix this!!!!!!!!!!!!!!!!!!!!
+    ImageCounter[1] = 5
     # Number of slits calculated.
     NumberOfSlits = height / SlitSize[1]
     # Loop to create each view.
