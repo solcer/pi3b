@@ -34,7 +34,7 @@ def main(ShowImage='yes'):
     # Recognize Raspberry PI.
     if socket.gethostname() == 'PI3B01':
         BlockNumber           = 'a1'
-        ImageCounterCoustant  = 0
+        ImageCounterConstant  = 0
     elif socket.gethostname() == 'PI3B02':
         BlockNumber           = 'a2'
         ImageCounterConstant  = 5
