@@ -6,34 +6,20 @@ __author__ = ('Kaan Akşit')
 import sys,os,time,pygame,socket,csv
 from pygame.locals import *
 
-# CSV reader to read offset positions of the pico projectors.
-def ReadCSV(filename,BlockNumber):
-    # Open a socket to read CSV.
-    ifile   = open(filename, "rb")
-    reader  = csv.reader(ifile)
-    offsets = []
-    # Skip header
-    next(reader)
-    # Read the CSV row by row.
-    for row in reader:
-        # Avoid empty lines in CSV
-        if len(row) > 0:
-            # Strip white spaces from CSV file.
-            row = ([element.strip() for element in row])
-            # Match the block number to get the related data into the array.
-            if row[0] == BlockNumber:
-                offsets.append(row)
-    # Close the socket.
-    ifile.close()
-    return offsets
-
-# CSV writer to write offset positions of the pico projectors.
-def WriteCSV(filename):
-    return True
+# Read image 
 
 # Main loop
 def main():
-    print ReadCSV("offsets.csv","a1")   
+    # Open a socket to read CSV.
+    ifile   = open("offsets.csv", "rb")
+    reader  = csv.reader(ifile)
+    # Get every line in the CSV file.  
+    lines = [l for l in reader]
+    # Close the socket.
+    ifile.close()
+    print lines   
+    writer = csv.writer(open('output.csv', 'w'))
+    writer.writerows(lines)
     return True
 
 if __name__ == '__main__':

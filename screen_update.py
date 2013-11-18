@@ -55,6 +55,12 @@ def main():
     print ttys
     # Test pattern is displayed on the each display.
     test(ttys,screens,"no")
+    # If flag to clear all screen is iniated, this block is valid.
+    if len(sys.argv) > 1:
+        if int(sys.argv[1]) == 666:
+            print 'All screens are cleared!'
+            sys.exit()
+            return True     
     # Each screen is being update with the necessary content.
     # Change the tdelay (secs) to adjust the time in between each screen update.
     tdelay  = 1
