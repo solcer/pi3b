@@ -3,7 +3,7 @@
 
 __author__ = ('Kaan Akşit')
 
-import sys,os,time,pygame,socket,csv
+import sys,os,time,pygame,socket,csv,time
 from pygame.locals import *
 
 # Main loop
@@ -13,7 +13,7 @@ def main():
     # Error margin.
     Error      = 10 
     # Resolution of adjustment, leave it in between 1-10.
-    resolution = 1
+    resolution = 5
     # Boundaries of a single slit.
     MinLim     = 1045
     MaxLim     = 1800
@@ -46,6 +46,7 @@ def main():
         os.system('python create_content.py')
         # Only turn on the picop under calibration
         os.system('sudo python screen_update.py %s' % PicopNo)
+        time.sleep(2)
         # Delete and get a new picture from the camera.
         os.system('rm photoaf.*')
         os.system('wget http://172.20.36.122:8080/photoaf.jpg')
@@ -71,24 +72,26 @@ def main():
         # Change offset to calibrate the picoprojector.
         else:
             # If the slit is closer to the bottom then move it below.
-            if Min < MinLim - Error:
-               lines[RowNo][2] += resolution
-            if Min > MinLim + Error:
-               lines[RowNo][2] -= resolution
-            if Max < MaxLim - Error:
-               lines[RowNo][2] += resolution
-            if Max > MaxLim + Error:
-               lines[RowNo][2] -= resolution
-            if SlitHeight < SlitLim - Error:
-               lines[RowNo][4] += resolution
+            if Min < MinLim + Error:
+               lines[RowNo][2] = int(lines[RowNo][2]) - resolution
+            if Min > MinLim - Error:
+               lines[RowNo][2] = int(lines[RowNo][2]) + resolution
+            if Max < MaxLim + Error:
+               lines[RowNo][2] = int(lines[RowNo][2]) - resolution
+            if Max > MaxLim - Error:
+               lines[RowNo][2] = int(lines[RowNo][2]) + resolution
             if SlitHeight > SlitLim + Error:
-               lines[RowNo][4] -= resolution
-        print "Min deviation: ", Min - MinLim, "Max deviation: ", MaxLim - Max
+               lines[RowNo][4] = int(lines[RowNo][4]) + resolution
+            if SlitHeight < SlitLim - Error:
+               lines[RowNo][4] = int(lines[RowNo][4]) - resolution
+            # Print the new offset values.
+            print '\033[92m', lines[RowNo], '\033[0m'
+            # Rights the results to the output CSV.
+            writer  = csv.writer(open('offsets.csv', 'w'))
+            writer.writerows(lines)
+        print '\033[93m', "Min deviation: ", Min - MinLim, "Max deviation: ", MaxLim - Max, "Slit deviation:", SlitHeight - SlitLim, '\033[0m'
     # Save the image.
     pygame.image.save(ThrImage, 'output.jpg')
-    # Rights the results to the output CSV.
-    writer  = csv.writer(open('output.csv', 'w'))
-    writer.writerows(lines)
     return True
 
 if __name__ == '__main__':
