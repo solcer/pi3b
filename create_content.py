@@ -6,7 +6,6 @@ __author__ = ('Kaan Akşit')
 import sys,os,time,pygame,socket,csv
 from pygame.locals import *
 
-
 # CSV reader to read offset positions of the pico projectors.
 def ReadCSV(filename,BlockNumber):
     # Open a socket to read CSV.

@@ -34,7 +34,17 @@ def FindScreens():
 
 # Main function started when the script is initiated directly.
 def main():
+    # Printing author information.
     print 'PI3B script, Author(s): %s' % __author__
+    # Check for flags to know which screens to update.
+    UpdateList = []
+    for SelectedScreens in sys.argv:
+        if len(SelectedScreens) < 2:
+            if int(SelectedScreens) < 5 and int(SelectedScreens) > -1:
+                UpdateList.append(int(SelectedScreens))
+    if len(sys.argv) == 1:
+        UpdateList = [0,1,2,3,4]
+    print "Screens to be update:", UpdateList
     # Finding the screens connected to the device.
     print '\nFramebuffer devices found:'
     screens = FindScreens()
@@ -48,8 +58,7 @@ def main():
     # Each screen is being update with the necessary content.
     # Change the tdelay (secs) to adjust the time in between each screen update.
     tdelay  = 1
-    for i in xrange(0,len(ttys)):
-#        UpdateScreen(ttys[i],'./Content/screen%d.png' % (i+1))
+    for i in UpdateList:
         UpdateScreen(ttys[i],'./Content/samplescreen%d.png' % i)
         print 'Updating %s on %s' % (screens[i],ttys[i])
         time.sleep(tdelay)   
