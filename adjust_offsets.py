@@ -8,15 +8,19 @@ from pygame.locals import *
 
 # Main loop
 def main():
+    # If enabled user input offset values.
+    ManualMode = 'on'
+    # Determines which Picop to calibrate (Device Under Test).
+    DUT        = input('Enter the number of the pico projector to calibrate (0-4):')
     # Pico projector number, this determines from which projector it should start calibrating.
-    PicopNo    = 0
+    PicopNo    = DUT
     # Error margin.
-    Error      = 10 
+    Error      = 5
     # Resolution of adjustment, leave it in between 1-10.
     resolution = 10
     # Boundaries of a single slit.
-    MinLim     = 1045
-    MaxLim     = 1800
+    MinLim     = 1000
+    MaxLim     = 1700
     SlitLim    = MaxLim - MinLim
     # Threshold value.
     ThrCnst    = 10
@@ -33,7 +37,7 @@ def main():
     # Close the socket.
     ifile.close()
     # Calibrate all the pico projectors one by one via loop.
-    while PicopNo < 1:
+    while PicopNo == DUT:
         # Free memory from previous session by killing unnecessary programs.
         os.system('sudo pkill fbi')
         # First find the corresponding line in the offset table.
@@ -56,7 +60,7 @@ def main():
         image    = pygame.image.load('photoaf.jpg')
         # Threshold the image.
         ThrImage = image.copy()
-        pygame.transform.threshold(ThrImage, image, (30,30,30), (90,90,90), (255,255,255), 1)
+        pygame.transform.threshold(ThrImage, image, (30,30,30), (110,110,110), (255,255,255), 1)
         # Blob is detected to find out about size and location of the slit.
         mask       = pygame.mask.from_threshold(ThrImage, (255,255,255), (30, 30, 30))
         island     = mask.connected_component()
@@ -67,25 +71,35 @@ def main():
         print "Minimum: ", Min, "Maximum: ", Max, "Slit Size in pixels: ", SlitHeight
 
         # Check if the slit is in the range.
-        if Min > MinLim - Error and Min < MinLim + Error:
-            if Max > MaxLim - Error and Max < MaxLim + Error:
-                PicopNo += 1
-                print 'Pico projector No%s is calibrated, moving to the next one.' % PicopNo
+        if Min > MinLim - Error and Min < MinLim + Error and  Max > MaxLim - Error and Max < MaxLim + Error and SlitHeight > SlitLim - Error and SlitHeight < SlitLim + Error:
+                    PicopNo += 1
+                    print 'Pico projector No%s is calibrated, moving to the next one.' % PicopNo
         # Change offset to calibrate the picoprojector.
         else:
-            # If the slit is closer to the bottom then move it below.
-            if Min > MinLim + Error:
-               lines[RowNo][2] = int(lines[RowNo][2]) - resolution
-            if Min < MinLim - Error:
-               lines[RowNo][2] = int(lines[RowNo][2]) + resolution
-            if Max > MaxLim + Error:
-               lines[RowNo][2] = int(lines[RowNo][2]) - resolution
-            if Max < MaxLim - Error:
-               lines[RowNo][2] = int(lines[RowNo][2]) + resolution
-            if SlitHeight > SlitLim + Error:
-               lines[RowNo][4] = int(lines[RowNo][4]) - resolution
-            if SlitHeight < SlitLim - Error:
-               lines[RowNo][4] = int(lines[RowNo][4]) + resolution
+            if ManualMode == 'on':
+                # Print the new offset values.
+                print '\033[92m', lines[RowNo], '\033[0m'
+                print '\033[93m', "Min deviation: ", Min - MinLim, "Max deviation: ", MaxLim - Max, "Slit deviation:", SlitHeight - SlitLim, '\033[0m'
+                lines[RowNo][2] = input('OffSetLeft (%s):' % lines[RowNo][2])
+                lines[RowNo][4] = input('SlitSize (%s):' % lines[RowNo][4])
+            else:
+                if PicopNo % 2 == 1:
+                    m = -1
+                else:
+                    m = 1
+                # If the slit is closer to the bottom then move it below.
+                if Min > MinLim + Error:
+                    lines[RowNo][2] = int(lines[RowNo][2]) - resolution * m
+                if Min < MinLim - Error:
+                    lines[RowNo][2] = int(lines[RowNo][2]) + resolution * m
+                if Max > MaxLim + Error:
+                    lines[RowNo][2] = int(lines[RowNo][2]) - resolution * m
+                if Max < MaxLim - Error:
+                    lines[RowNo][2] = int(lines[RowNo][2]) + resolution * m
+                if SlitHeight > SlitLim + Error:
+                    lines[RowNo][4] = int(lines[RowNo][4]) - resolution
+                if SlitHeight < SlitLim - Error:
+                    lines[RowNo][4] = int(lines[RowNo][4]) + resolution
             # Print the new offset values.
             print '\033[92m', lines[RowNo], '\033[0m'
             # Rights the results to the output CSV.
