@@ -8,6 +8,7 @@ from pygame.locals import *
 
 # Main loop
 def main():
+    print '\033[93m Raava: We are bounded forever! \033[0m'
     # If enabled user input offset values.
     ManualMode = 'on'
     # Determines which Picop to calibrate (Device Under Test).
@@ -19,8 +20,8 @@ def main():
     # Resolution of adjustment, leave it in between 1-10.
     resolution = 10
     # Boundaries of a single slit.
-    MinLim     = 1000
-    MaxLim     = 1700
+    MinLim     = 930
+    MaxLim     = 1630
     SlitLim    = MaxLim - MinLim
     # Threshold value.
     ThrCnst    = 10
@@ -111,6 +112,7 @@ def main():
         # Save the image.
         pygame.draw.rect(ThrImage, (255,0,0), BigBlob, 3)
         pygame.image.save(ThrImage, 'output.jpg')
+    print '\033[93m Avatar Wan: I will be the bridge between our two worlds. \033[0m'
     return True
 
 if __name__ == '__main__':
