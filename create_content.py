@@ -80,11 +80,16 @@ def main(ShowImage='yes'):
     ImageCounter    = []
     MultiViewImages = ['./Content/right.jpg','./Content/left.jpg'] 
     for ImageName in MultiViewImages:
+        # Adding a new slice to the slices matrix.
         ImageSlices.append(LoadImage(ImageName,SlitHeight, 480, 200))
-        # ImageCounter used in displaying right images.
-        ImageCounter.append(ImageCounterConstant)
     # Number of slits calculated.
     NumberOfSlits = height / SlitSize[1]
+    # ImageCounter vector is built.
+    for z in xrange(0,NumberOfSlits):
+        # ImageCounter used in displaying right images.
+        ImageCounter.append(ImageCounterConstant)
+    # Flag for stereoscopic view with single perspective.
+    flag          = 'left'
     # Loop to create each view.
     for j in xrange(0,NumberOfViews):
         # Setting offset
@@ -99,22 +104,21 @@ def main(ShowImage='yes'):
             pygame.draw.rect(NewSurface, colors[i], slit, 0)
             # If image display is desired, this if loop takes on.
             if ShowImage == 'yes':
+                # Specify which color is replaced with an image.
+                a = i 
                 # Choosing the specific slices in the image for correct image registration.
-                if colors[i] == (127,255,127):
-                    # Adjusting image according to the image height.
-                    ImageSlices[0][ImageCounter[0]] = pygame.transform.scale(ImageSlices[0][ImageCounter[0]],(SlitSize[0], SlitSize[1]))
-                    # Necessary slice is being place accordingly.
-                    NewSurface.blit(ImageSlices[0][ImageCounter[0]], slit)                
-                    # Increasing the image counter to take right slice in the next step.
-                    ImageCounter[0] += 1
-                # Choosing the specific slices in the image for correct image registration.
-                if colors[i] == (200,0,50):
-                    # Adjusting image according to the image height.
-                    ImageSlices[1][ImageCounter[1]] = pygame.transform.scale(ImageSlices[0][ImageCounter[1]],(SlitSize[0], SlitSize[1]))
-                    # Necessary slice is being place accordingly.
-                    NewSurface.blit(ImageSlices[1][ImageCounter[1]], slit)                
-                    # Increasing the image counter to take right slice in the next step.
-                    ImageCounter[1] += 1
+                if flag == 'left':
+                    flag        = 'right'
+                    ChosenImage = ImageSlices[0]
+                else:
+                    flag        = 'left'
+                    ChosenImage = ImageSlices[1]
+                # Adjusting image according to the image height.
+                ChosenImage[ImageCounter[a]] = pygame.transform.scale(ChosenImage[ImageCounter[a]],(SlitSize[0], SlitSize[1]))
+                # Necessary slice is being place accordingly.
+                NewSurface.blit(ChosenImage[ImageCounter[a]], slit)                
+                # Increasing the image counter to take right slice in the next step.
+                ImageCounter[a] += 1
         # Fill the blank space with correct color.
         if NewSurface.get_at((0,0)) == (0,0,0,255):
             slit       = pygame.Rect((OffsetLeft,0), (SlitSize[0], SlitSize[1]/2))
