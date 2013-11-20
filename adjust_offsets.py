@@ -73,8 +73,8 @@ def main():
 
         # Check if the slit is in the range.
         if Min > MinLim - Error and Min < MinLim + Error and  Max > MaxLim - Error and Max < MaxLim + Error and SlitHeight > SlitLim - Error and SlitHeight < SlitLim + Error:
-                    PicopNo += 1
                     print 'Pico projector No%s is calibrated, moving to the next one.' % PicopNo
+                    PicopNo += 1
         # Change offset to calibrate the picoprojector.
         else:
             if ManualMode == 'on':
