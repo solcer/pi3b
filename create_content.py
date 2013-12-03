@@ -78,9 +78,10 @@ def main(ShowImage='yes'):
                  (100,100,0),
                  (40,10,23),
                  (70,80,90),
+                 (138,56,190)
                  ]
     # Slit is defined geometrically.
-    SlitHeight      = 17
+    SlitHeight      = 15
     SlitSize        = [0, SlitHeight]
     # Load multiview images and slice them into pieces
     ImageSlices     = []
@@ -131,8 +132,6 @@ def main(ShowImage='yes'):
             slit       = pygame.Rect((OffsetLeft,0), (SlitSize[0], SlitSize[1]))
             pygame.draw.rect(NewSurface, NewSurface.get_at((width-1,height-1)), slit, 0)
         # Saving the surface as an image file.
-#        if j % 2 == 1 and BlockNumber == 'a1':
-#            NewSurface = pygame.transform.rotate(NewSurface, 180)
 #        if j % 2 == 0 and BlockNumber == 'a2':
 #            NewSurface = pygame.transform.rotate(NewSurface, 180)
         pygame.image.save(NewSurface, './Content/samplescreen%d.png' % j)
@@ -161,4 +160,4 @@ def LoadImage(path,SlitHeight=20,reverse=0,width=200,height=480):
     return Cropped
 
 if __name__ == '__main__':
-    sys.exit(main('no'))
+    sys.exit(main('yes'))
