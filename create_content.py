@@ -109,8 +109,8 @@ def main(ShowImage='yes'):
     for ImageName in MultiViewImages:
         # Adding a new slice to the slices matrix.
         ImageSlices.append(LoadImage(ImageName,SlitHeight, 480, 200))
-    # Number of slits calculated.
-    NumberOfSlits = height / SlitSize[1] + 1
+    # Number of slits calculated. +10 to avoid missing slit.
+    NumberOfSlits = height / SlitSize[1] + 10
     # ImageCounter vector is built.
     for z in xrange(0,NumberOfSlits):
         # ImageCounter used in displaying right images.
@@ -127,8 +127,6 @@ def main(ShowImage='yes'):
         NewSurface = pygame.Surface((width, height))
         # Loop to create each slit.
         for i in xrange(0,NumberOfSlits):
-            if j == 2:
-                print (i*SlitSize[1] + OffsetTop), ' ',  colors[i]
             if (i*SlitSize[1] + OffsetTop) > 0:
                 slit       = pygame.Rect((OffsetLeft,(i*SlitSize[1] + OffsetTop)), SlitSize)
             else:
@@ -151,13 +149,6 @@ def main(ShowImage='yes'):
                 NewSurface.blit(ChosenImage[ImageCounter[a]], slit)                
                 # Increasing the image counter to take right slice in the next step.
                 ImageCounter[a] += 1
-        # Fill the blank space with correct color.
-#        if NewSurface.get_at((0,0)) == (0,0,0,255):
-#            slit       = pygame.Rect((OffsetLeft,0), (SlitSize[0], SlitSize[1]))
-#            pygame.draw.rect(NewSurface, NewSurface.get_at((width-1,height-1)), slit, 0)
-        # Saving the surface as an image file.
-#        if j % 2 == 0 and BlockNumber == 'a2':
-#            NewSurface = pygame.transform.rotate(NewSurface, 180)
         pygame.image.save(NewSurface, './Content/samplescreen%d.png' % j)
     return True
 
