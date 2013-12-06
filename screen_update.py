@@ -40,10 +40,10 @@ def main():
     UpdateList = []
     for SelectedScreens in sys.argv:
         if len(SelectedScreens) < 2:
-            if int(SelectedScreens) < 5 and int(SelectedScreens) > -1:
+            if int(SelectedScreens) < 6 and int(SelectedScreens) > -1:
                 UpdateList.append(int(SelectedScreens))
     if len(sys.argv) == 1:
-        UpdateList = [0,1,2,3,4]
+        UpdateList = [0,1,2,3,4,5]
     print "Screens to be update:", UpdateList
     # Finding the screens connected to the device.
     print '\nFramebuffer devices found:'
@@ -65,7 +65,7 @@ def main():
     # Change the tdelay (secs) to adjust the time in between each screen update.
     tdelay  = 1
     for i in UpdateList:
-        UpdateScreen(ttys[i],'./Content/samplescreen%d.png' % i)
+        UpdateScreen(ttys[i],'./Content/samplescreen%d.png' % i)     
         print 'Updating %s on %s' % (screens[i],ttys[i])
         time.sleep(tdelay)   
     return True

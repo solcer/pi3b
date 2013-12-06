@@ -30,20 +30,20 @@ def ReadCSV(filename,BlockNumber):
 # If ShowImage is set to yes, the content is created using sample input under Content folder.
 # BlockNumber determines the position of the five pico projector.
 def main(ShowImage='yes'):
+    # Number of views.
+    NumberOfViews = 6
     # Recognize Raspberry PI.
     if socket.gethostname() == 'PI3B01':
         BlockNumber           = 'a1'
         ImageCounterConstant  = 0
     elif socket.gethostname() == 'PI3B02':
         BlockNumber           = 'a2'
-        ImageCounterConstant  = 5
+        ImageCounterConstant  = NumberOfViews
     # Reading offsets.csv to retrieve the offset values.
     offsets = ReadCSV("offsets.csv",BlockNumber)
     # Width, and height of the desired image.
     width         = 848
     height        = 480
-    # Number of views.
-    NumberOfViews = 5
     # Colors are defined.
     colors     = [
                  (255,0,0),
@@ -100,7 +100,7 @@ def main(ShowImage='yes'):
                  (43,89,75),
                  ]
     # Slit is defined geometrically.
-    SlitHeight      = 10
+    SlitHeight      = 26
     SlitSize        = [0, SlitHeight]
     # Load multiview images and slice them into pieces
     ImageSlices     = []
@@ -110,7 +110,7 @@ def main(ShowImage='yes'):
         # Adding a new slice to the slices matrix.
         ImageSlices.append(LoadImage(ImageName,SlitHeight, 480, 200))
     # Number of slits calculated.
-    NumberOfSlits = height / SlitSize[1]
+    NumberOfSlits = height / SlitSize[1] + 1
     # ImageCounter vector is built.
     for z in xrange(0,NumberOfSlits):
         # ImageCounter used in displaying right images.
@@ -127,7 +127,12 @@ def main(ShowImage='yes'):
         NewSurface = pygame.Surface((width, height))
         # Loop to create each slit.
         for i in xrange(0,NumberOfSlits):
-            slit       = pygame.Rect((OffsetLeft,(i*SlitSize[1] + OffsetTop) % height), SlitSize)
+            if j == 2:
+                print (i*SlitSize[1] + OffsetTop), ' ',  colors[i]
+            if (i*SlitSize[1] + OffsetTop) > 0:
+                slit       = pygame.Rect((OffsetLeft,(i*SlitSize[1] + OffsetTop)), SlitSize)
+            else:
+                slit       = pygame.Rect((OffsetLeft,((NumberOfSlits + i)*SlitSize[1] + OffsetTop)), SlitSize)
             pygame.draw.rect(NewSurface, colors[i], slit, 0)
             # If image display is desired, this if loop takes on.
             if ShowImage == 'yes':
@@ -147,9 +152,9 @@ def main(ShowImage='yes'):
                 # Increasing the image counter to take right slice in the next step.
                 ImageCounter[a] += 1
         # Fill the blank space with correct color.
-        if NewSurface.get_at((0,0)) == (0,0,0,255):
-            slit       = pygame.Rect((OffsetLeft,0), (SlitSize[0], SlitSize[1]))
-            pygame.draw.rect(NewSurface, NewSurface.get_at((width-1,height-1)), slit, 0)
+#        if NewSurface.get_at((0,0)) == (0,0,0,255):
+#            slit       = pygame.Rect((OffsetLeft,0), (SlitSize[0], SlitSize[1]))
+#            pygame.draw.rect(NewSurface, NewSurface.get_at((width-1,height-1)), slit, 0)
         # Saving the surface as an image file.
 #        if j % 2 == 0 and BlockNumber == 'a2':
 #            NewSurface = pygame.transform.rotate(NewSurface, 180)
@@ -179,4 +184,4 @@ def LoadImage(path,SlitHeight=20,reverse=0,width=200,height=480):
     return Cropped
 
 if __name__ == '__main__':
-    sys.exit(main('yes'))
+    sys.exit(main('no'))
