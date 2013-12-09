@@ -30,6 +30,10 @@ def ReadCSV(filename,BlockNumber):
 # If ShowImage is set to yes, the content is created using sample input under Content folder.
 # BlockNumber determines the position of the five pico projector.
 def main(ShowImage='yes'):
+    # Setting ShowImage through shell.
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'no':
+            ShowImage = 'no' 
     # Number of views.
     NumberOfViews = 6
     # Recognize Raspberry PI.
@@ -114,7 +118,7 @@ def main(ShowImage='yes'):
     # ImageCounter vector is built.
     for z in xrange(0,NumberOfSlits):
         # ImageCounter used in displaying right images.
-        ImageCounter.append(ImageCounterConstant)
+       ImageCounter.append(ImageCounterConstant)
     # Flag for stereoscopic view with single perspective.
     flag          = 'left'
     # Loop to create each view.
@@ -177,4 +181,4 @@ def LoadImage(path,SlitHeight=20,reverse=0,width=200,height=480):
     return Cropped
 
 if __name__ == '__main__':
-    sys.exit(main('yes'))
+    sys.exit(main())
