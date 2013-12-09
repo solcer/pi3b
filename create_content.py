@@ -156,9 +156,17 @@ def main(ShowImage='yes'):
                 # Increasing the image counter to take right slice in the next step.
                 ImageCounter[a] += 1
         pygame.image.save(NewSurface, './Content/samplescreen%d.png' % j)
-    os.system("mv ./Content/samplescreen1.png ./Content/samplescreen6.png")
+    os.system("mv ./Content/samplescreen1.png ./Content/samplescreen12.png")
     os.system("mv ./Content/samplescreen5.png ./Content/samplescreen1.png")
-    os.system("mv ./Content/samplescreen6.png ./Content/samplescreen5.png")
+
+    os.system("mv ./Content/samplescreen2.png ./Content/samplescreen13.png")
+    os.system("mv ./Content/samplescreen3.png ./Content/samplescreen14.png")
+    os.system("mv ./Content/samplescreen4.png ./Content/samplescreen15.png")
+
+    os.system("mv ./Content/samplescreen12.png ./Content/samplescreen2.png")
+    os.system("mv ./Content/samplescreen13.png ./Content/samplescreen3.png")
+    os.system("mv ./Content/samplescreen14.png ./Content/samplescreen4.png")
+    os.system("mv ./Content/samplescreen15.png ./Content/samplescreen5.png")
     return True
 
 # Function to load image and slice it
