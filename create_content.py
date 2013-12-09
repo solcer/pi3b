@@ -100,7 +100,7 @@ def main(ShowImage='yes'):
                  (43,89,75),
                  ]
     # Slit is defined geometrically.
-    SlitHeight      = 26
+    SlitHeight      = 13
     SlitSize        = [0, SlitHeight]
     # Load multiview images and slice them into pieces
     ImageSlices     = []
@@ -175,4 +175,4 @@ def LoadImage(path,SlitHeight=20,reverse=0,width=200,height=480):
     return Cropped
 
 if __name__ == '__main__':
-    sys.exit(main('no'))
+    sys.exit(main('yes'))
