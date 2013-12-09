@@ -132,6 +132,8 @@ def main(ShowImage='yes'):
             else:
                 slit       = pygame.Rect((OffsetLeft,((NumberOfSlits + i)*SlitSize[1] + OffsetTop)), SlitSize)
             pygame.draw.rect(NewSurface, colors[i], slit, 0)
+            # Check if the OffsetLeft is calibrated by drawing a line at the center.
+            pygame.draw.rect(NewSurface, (255,255,255), pygame.Rect(slit.centerx-100,slit.centery,SlitHeight,slit.height) ,0)
             # If image display is desired, this if loop takes on.
             if ShowImage == 'yes':
                 # Specify which color is replaced with an image.
