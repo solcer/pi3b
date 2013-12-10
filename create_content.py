@@ -147,10 +147,9 @@ def main(ShowImage='yes'):
                     flag        = 'right'
                     ChosenImage = ImageSlices[0]
                 elif flag == 'right':
-                    flag        = 'limon'
-                    ChosenImage = ImageSlices[1]
-                elif flag == 'limon':
                     flag        = 'left'
+                    ChosenImage = ImageSlices[1]
+                if colors[i] == (0,150,150):
                     ChosenImage = ImageSlices[2]                    
                 # Adjusting image according to the image height.
                 ChosenImage[ImageCounter[a]] = pygame.transform.scale(ChosenImage[ImageCounter[a]],(SlitSize[0], SlitSize[1]))
