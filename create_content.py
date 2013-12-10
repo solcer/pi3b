@@ -109,7 +109,7 @@ def main(ShowImage='yes'):
     # Load multiview images and slice them into pieces
     ImageSlices     = []
     ImageCounter    = []
-    MultiViewImages = ['./Content/right.jpg','./Content/left.jpg'] 
+    MultiViewImages = ['./Content/right.jpg','./Content/left.jpg','./Content/limon.jpg'] 
     for ImageName in MultiViewImages:
         # Adding a new slice to the slices matrix.
         ImageSlices.append(LoadImage(ImageName,SlitHeight, 480, 200))
@@ -146,9 +146,12 @@ def main(ShowImage='yes'):
                 if flag == 'left':
                     flag        = 'right'
                     ChosenImage = ImageSlices[0]
-                else:
-                    flag        = 'left'
+                elif flag == 'right':
+                    flag        = 'limon'
                     ChosenImage = ImageSlices[1]
+                elif flag == 'limon':
+                    flag        = 'left'
+                    ChosenImage = ImageSlices[2]                    
                 # Adjusting image according to the image height.
                 ChosenImage[ImageCounter[a]] = pygame.transform.scale(ChosenImage[ImageCounter[a]],(SlitSize[0], SlitSize[1]))
                 # Necessary slice is being place accordingly.
@@ -158,11 +161,9 @@ def main(ShowImage='yes'):
         pygame.image.save(NewSurface, './Content/samplescreen%d.png' % j)
     os.system("mv ./Content/samplescreen1.png ./Content/samplescreen12.png")
     os.system("mv ./Content/samplescreen5.png ./Content/samplescreen1.png")
-
     os.system("mv ./Content/samplescreen2.png ./Content/samplescreen13.png")
     os.system("mv ./Content/samplescreen3.png ./Content/samplescreen14.png")
     os.system("mv ./Content/samplescreen4.png ./Content/samplescreen15.png")
-
     os.system("mv ./Content/samplescreen12.png ./Content/samplescreen2.png")
     os.system("mv ./Content/samplescreen13.png ./Content/samplescreen3.png")
     os.system("mv ./Content/samplescreen14.png ./Content/samplescreen4.png")
