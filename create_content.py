@@ -109,7 +109,7 @@ def main(ShowImage='yes'):
     # Load multiview images and slice them into pieces
     ImageSlices     = []
     ImageCounter    = []
-    MultiViewImages = ['./Content/right.jpg','./Content/left.jpg','./Content/limon.jpg'] 
+    MultiViewImages = ['./Content/right.jpg','./Content/left.jpg','./Content/limon.jpg','./Content/hacivatkaragoz.jpg'] 
     for ImageName in MultiViewImages:
         # Adding a new slice to the slices matrix.
         ImageSlices.append(LoadImage(ImageName,SlitHeight, 480, 200))
@@ -151,6 +151,8 @@ def main(ShowImage='yes'):
                     ChosenImage = ImageSlices[1]
                 if colors[i] == (0,150,150):
                     ChosenImage = ImageSlices[2]                    
+                if colors[i] == (50,0,255):
+                    ChosenImage = ImageSlices[3]                    
                 # Adjusting image according to the image height.
                 ChosenImage[ImageCounter[a]] = pygame.transform.scale(ChosenImage[ImageCounter[a]],(SlitSize[0], SlitSize[1]))
                 # Necessary slice is being place accordingly.
