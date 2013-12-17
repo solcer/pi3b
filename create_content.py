@@ -111,24 +111,24 @@ def main(ShowImage='yes'):
     ImageCounter    = []
 #    MultiViewImages = ['./Content/right.jpg','./Content/left.jpg','./Content/limon.jpg','./Content/hacivatkaragoz.jpg','./Content/ulas.jpg'] 
     MultiViewImages = [
-                      './Blender/image0.png',
-                      './Blender/image1.png',
-                      './Blender/image2.png',
-                      './Blender/image3.png',
-                      './Blender/image4.png',
-                      './Blender/image5.png',
-                      './Blender/image6.png',
-                      './Blender/image7.png',
-                      './Blender/image8.png',
-                      './Blender/image9.png',
-                      './Blender/image10.png',
-                      './Blender/image11.png',
-                      './Blender/image12.png',
-                      './Blender/image13.png',
-                      './Blender/image14.png',
-                      './Blender/image15.png',
-                      './Blender/image16.png',
                       './Blender/image17.png',
+                      './Blender/image16.png',
+                      './Blender/image15.png',
+                      './Blender/image14.png',
+                      './Blender/image13.png',
+                      './Blender/image12.png',
+                      './Blender/image11.png',
+                      './Blender/image10.png',
+                      './Blender/image9.png',
+                      './Blender/image8.png',
+                      './Blender/image7.png',
+                      './Blender/image6.png',
+                      './Blender/image5.png',
+                      './Blender/image4.png',
+                      './Blender/image3.png',
+                      './Blender/image2.png',
+                      './Blender/image1.png',
+                      './Blender/image0.png',
                       ]
     for ImageName in MultiViewImages:
         # Adding a new slice to the slices matrix.
@@ -185,7 +185,7 @@ def main(ShowImage='yes'):
     return True
 
 # Function to load image and slice it
-def LoadImage(path,SlitHeight=20,reverse=0,width=312,height=848,rotate='yes'):
+def LoadImage(path,SlitHeight=20,reverse=0,width=156,height=848,rotate='yes'):
     # Image load takes place.
     Image   = pygame.image.load(path)
     # Rotate Image.
