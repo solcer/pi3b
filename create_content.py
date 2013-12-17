@@ -109,10 +109,30 @@ def main(ShowImage='yes'):
     # Load multiview images and slice them into pieces
     ImageSlices     = []
     ImageCounter    = []
-    MultiViewImages = ['./Content/right.jpg','./Content/left.jpg','./Content/limon.jpg','./Content/hacivatkaragoz.jpg','./Content/ulas.jpg'] 
+#    MultiViewImages = ['./Content/right.jpg','./Content/left.jpg','./Content/limon.jpg','./Content/hacivatkaragoz.jpg','./Content/ulas.jpg'] 
+    MultiViewImages = [
+                      './Blender/image0.png',
+                      './Blender/image1.png',
+                      './Blender/image2.png',
+                      './Blender/image3.png',
+                      './Blender/image4.png',
+                      './Blender/image5.png',
+                      './Blender/image6.png',
+                      './Blender/image7.png',
+                      './Blender/image8.png',
+                      './Blender/image9.png',
+                      './Blender/image10.png',
+                      './Blender/image11.png',
+                      './Blender/image12.png',
+                      './Blender/image13.png',
+                      './Blender/image14.png',
+                      './Blender/image15.png',
+                      './Blender/image16.png',
+                      './Blender/image17.png',
+                      ]
     for ImageName in MultiViewImages:
         # Adding a new slice to the slices matrix.
-        ImageSlices.append(LoadImage(ImageName,SlitHeight, 480, 200))
+        ImageSlices.append(LoadImage(ImageName,SlitHeight))
     # Number of slits calculated. +10 to avoid missing slit.
     NumberOfSlits = height / SlitSize[1] + 10
     # ImageCounter vector is built.
@@ -143,18 +163,9 @@ def main(ShowImage='yes'):
                 # Specify which color is replaced with an image.
                 a = i 
                 # Choosing the specific slices in the image for correct image registration.
-                if flag == 'left':
-                    flag        = 'right'
-                    ChosenImage = ImageSlices[0]
-                elif flag == 'right':
-                    flag        = 'left'
-                    ChosenImage = ImageSlices[1]
-                if colors[i] == (0,150,150):
-                    ChosenImage = ImageSlices[2]                    
-                if colors[i] == (50,0,255):
-                    ChosenImage = ImageSlices[3]                    
-                if colors[i] == (200,100,0):
-                    ChosenImage = ImageSlices[4]                    
+                for c in xrange(0,17):
+                    if colors[i] == colors[c]:
+                        ChosenImage = ImageSlices[c]                    
                 # Adjusting image according to the image height.
                 ChosenImage[ImageCounter[a]] = pygame.transform.scale(ChosenImage[ImageCounter[a]],(SlitSize[0], SlitSize[1]))
                 # Necessary slice is being place accordingly.
@@ -174,10 +185,12 @@ def main(ShowImage='yes'):
     return True
 
 # Function to load image and slice it
-def LoadImage(path,SlitHeight=20,reverse=0,width=200,height=480):
+def LoadImage(path,SlitHeight=20,reverse=0,width=312,height=848,rotate='yes'):
     # Image load takes place.
     Image   = pygame.image.load(path)
-    # Transform the image into usable format
+    # Rotate Image.
+    Image   = pygame.transform.rotate(Image, -90)
+    # Transform the image into usable format.
     Image   = pygame.transform.scale(Image,(width, height))
     # Image properties are saved.
     ImgH    = Image.get_height()
