@@ -111,7 +111,8 @@ def main(ShowImage='yes'):
     ImageCounter    = []
     # List of image files to be used.
     MultiViewImages = []
-    for no in xrange(0,36):
+    hup             = 36
+    for no in xrange(0,hup):
         MultiViewImages.append('./Blender/image%s.png' % no)
     # Reverse order the images for correct registration on the screen.
     MultiViewImages = reversed(MultiViewImages)
@@ -147,7 +148,7 @@ def main(ShowImage='yes'):
                 # Specify which color is replaced with an image.
                 a = i 
                 # Choosing the specific slices in the image for correct image registration.
-                for c in xrange(0,17):
+                for c in xrange(0,hup):
                     if colors[i] == colors[c]:
                         ChosenImage = ImageSlices[c]                    
                         # Adjusting image according to the image height.
