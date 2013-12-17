@@ -193,6 +193,8 @@ def LoadImage(path,SlitHeight=20,reverse=0,width=156,height=848,rotate='yes'):
     Image   = pygame.image.load(path)
     # Rotate Image.
     Image   = pygame.transform.rotate(Image, -90)
+    # Mirror image horizontally.
+    Image   = pygame.transform.flip(Image,True,False)
     # Transform the image into usable format.
     Image   = pygame.transform.scale(Image,(width, height))
     # Image properties are saved.
