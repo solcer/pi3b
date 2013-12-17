@@ -5,9 +5,9 @@ import mathutils
 cam = bpy.dataobjects['Camera']
 
 # Loop to create images from different perspectives.
-for counter in range(0,18):
+for counter in range(0,36):
     # Angle is calculated according to counter.
-    alpha = -10*counter
+    alpha = -1.25*counter
     # Radius of the circle.
     h     = -1.1
     # Coordinates for the new camera location.
