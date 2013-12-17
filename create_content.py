@@ -156,7 +156,6 @@ def main(ShowImage='yes'):
                         NewSurface.blit(ChosenImage[ImageCounter[a]], slit)                
                         # Increasing the image counter to take right slice in the next step.
                         ImageCounter[a] += 1
-        NewSurface = pygame.transform.flip(NewSurface,False,True)
         pygame.image.save(NewSurface, './Content/samplescreen%d.png' % j)
     os.system("mv ./Content/samplescreen1.png ./Content/samplescreen12.png")
     os.system("mv ./Content/samplescreen5.png ./Content/samplescreen1.png")
