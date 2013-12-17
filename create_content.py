@@ -106,10 +106,10 @@ def main(ShowImage='yes'):
     # Slit is defined geometrically.
     SlitHeight      = 13
     SlitSize        = [0, SlitHeight]
-    # Load multiview images and slice them into pieces
+    # Load multiview images and slice them into pieces.
     ImageSlices     = []
     ImageCounter    = []
-#    MultiViewImages = ['./Content/right.jpg','./Content/left.jpg','./Content/limon.jpg','./Content/hacivatkaragoz.jpg','./Content/ulas.jpg'] 
+    # List of image files to be used.
     MultiViewImages = [
                       './Blender/image0.png',
                       './Blender/image1.png',
@@ -130,6 +130,9 @@ def main(ShowImage='yes'):
                       './Blender/image16.png',
                       './Blender/image17.png',
                       ]
+    # Reverse order the images for correct registration on the screen.
+    MultiViewImages = reversed(MultiViewImages)
+    # Create Image Slices to be displayed by each pico projector.
     for ImageName in MultiViewImages:
         # Adding a new slice to the slices matrix.
         ImageSlices.append(LoadImage(ImageName,SlitHeight))
