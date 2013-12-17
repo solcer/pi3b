@@ -110,26 +110,9 @@ def main(ShowImage='yes'):
     ImageSlices     = []
     ImageCounter    = []
     # List of image files to be used.
-    MultiViewImages = [
-                      './Blender/image0.png',
-                      './Blender/image1.png',
-                      './Blender/image2.png',
-                      './Blender/image3.png',
-                      './Blender/image4.png',
-                      './Blender/image5.png',
-                      './Blender/image6.png',
-                      './Blender/image7.png',
-                      './Blender/image8.png',
-                      './Blender/image9.png',
-                      './Blender/image10.png',
-                      './Blender/image11.png',
-                      './Blender/image12.png',
-                      './Blender/image13.png',
-                      './Blender/image14.png',
-                      './Blender/image15.png',
-                      './Blender/image16.png',
-                      './Blender/image17.png',
-                      ]
+    MultiViewImages = []
+    for no in xrange(0,36):
+        MultiViewImages.append('./Blender/image%s.png' % no)
     # Reverse order the images for correct registration on the screen.
     MultiViewImages = reversed(MultiViewImages)
     # Create Image Slices to be displayed by each pico projector.
@@ -142,8 +125,6 @@ def main(ShowImage='yes'):
     for z in xrange(0,NumberOfSlits):
         # ImageCounter used in displaying right images.
        ImageCounter.append(ImageCounterConstant)
-    # Flag for stereoscopic view with single perspective.
-    flag          = 'left'
     # Loop to create each view.
     for j in xrange(0,NumberOfViews):
         # Setting offset
@@ -169,12 +150,13 @@ def main(ShowImage='yes'):
                 for c in xrange(0,17):
                     if colors[i] == colors[c]:
                         ChosenImage = ImageSlices[c]                    
-                # Adjusting image according to the image height.
-                ChosenImage[ImageCounter[a]] = pygame.transform.scale(ChosenImage[ImageCounter[a]],(SlitSize[0], SlitSize[1]))
-                # Necessary slice is being place accordingly.
-                NewSurface.blit(ChosenImage[ImageCounter[a]], slit)                
-                # Increasing the image counter to take right slice in the next step.
-                ImageCounter[a] += 1
+                        # Adjusting image according to the image height.
+                        ChosenImage[ImageCounter[a]] = pygame.transform.scale(ChosenImage[ImageCounter[a]],(SlitSize[0], SlitSize[1]))
+                        # Necessary slice is being place accordingly.
+                        NewSurface.blit(ChosenImage[ImageCounter[a]], slit)                
+                        # Increasing the image counter to take right slice in the next step.
+                        ImageCounter[a] += 1
+        NewSurface = pygame.transform.flip(NewSurface,False,True)
         pygame.image.save(NewSurface, './Content/samplescreen%d.png' % j)
     os.system("mv ./Content/samplescreen1.png ./Content/samplescreen12.png")
     os.system("mv ./Content/samplescreen5.png ./Content/samplescreen1.png")
