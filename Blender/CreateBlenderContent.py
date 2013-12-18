@@ -2,12 +2,12 @@
 # Vector comes with mathutils.
 import mathutils
 # Set Camera object to a variable.
-cam = bpy.dataobjects['Camera']
+cam = bpy.data.objects['Camera']
 
 # Loop to create images from different perspectives.
 for counter in range(0,36):
     # Angle is calculated according to counter.
-    alpha = -1.25*counter
+    alpha = -5*counter
     # Radius of the circle.
     h     = -1.1
     # Coordinates for the new camera location.
