@@ -37,12 +37,16 @@ def main(ShowImage='yes'):
     # Number of views.
     NumberOfViews = 6
     # Recognize Raspberry PI.
-    if socket.gethostname() == 'PI3B01':
-        BlockNumber           = 'a1'
-        ImageCounterConstant  = 0
-    elif socket.gethostname() == 'PI3B02':
-        BlockNumber           = 'a2'
-        ImageCounterConstant  = NumberOfViews
+    NameOfTheHost = socket.gethostname()
+    if NameOfTheHost == 'PI3B01':
+        BlockNumber          = 'a1'
+        ImageCounterConstant = 0
+    elif NameOfTheHost == 'PI3B02':
+        BlockNumber          = 'a2'
+        ImageCounterConstant = NumberOfViews
+    elif NameOfTheHost == 'PI3B03':
+        BlockNumber          = 'a3'
+        ImageCounterConstant = 2*NumberOfViews  
     # Reading offsets.csv to retrieve the offset values.
     offsets = ReadCSV("offsets.csv",BlockNumber)
     # Width, and height of the desired image.
@@ -170,7 +174,7 @@ def main(ShowImage='yes'):
     return True
 
 # Function to load image and slice it
-def LoadImage(path,SlitHeight=20,reverse=0,width=156,height=848,rotate='yes'):
+def LoadImage(path,SlitHeight=20,reverse=0,width=234,height=848,rotate='yes'):
     # Image load takes place.
     Image   = pygame.image.load(path)
     # Rotate Image.
