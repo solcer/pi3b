@@ -28,7 +28,7 @@ def ReadCSV(filename,BlockNumber):
     return offsets
 
 # If ShowImage is set to yes, the content is created using sample input under Content folder.
-# BlockNumber determines the position of the five pico projector.
+# BlockNumber determines the position of the six pico projector.
 def main(ShowImage='yes'):
     # Setting ShowImage through shell.
     if len(sys.argv) > 1:
