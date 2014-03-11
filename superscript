@@ -1,0 +1,3 @@
+#! /bin/sh
+# http://raspberrypi.stackexchange.com/questions/8734/execute-script-on-start-up
+screen -d -m "cd /home/pi/pi3b/ && sh pi3b.sh"
