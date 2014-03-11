@@ -1,0 +1,4 @@
+#! /bin/sh
+sudo cp superscript /etc/init.d/
+sudo chmod 755 /etc/init.d/superscript
+sudo update-rc.d superscript defaults
