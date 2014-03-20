@@ -9,7 +9,7 @@ for counter in range(0,36):
     # Angle is calculated according to counter.
     alpha = -5*counter
     # Radius of the circle.
-    h     = -1.1
+    h     = -7.0
     # Coordinates for the new camera location.
     x     = sin(radians(alpha))*h; y= cos(radians(alpha))*h; z= 0
     # Set Camera location.
